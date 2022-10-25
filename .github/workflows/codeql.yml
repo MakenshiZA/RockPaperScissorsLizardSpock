@@ -9,7 +9,7 @@
 # the `language` matrix defined below to confirm you have the correct set of
 # supported CodeQL languages.
 #
-name: "CodeQL"
+name: "CodeQL Analysis"
 
 on:
   push:
@@ -18,19 +18,20 @@ on:
     # The branches below must be a subset of the branches above
     branches: [ "main" ]
   schedule:
-    - cron: '38 22 * * 6'
-
+    - cron: 'o 8 * * *'
+    workflow_dispatch:
+    
 jobs:
   analyze:
     name: Analyze
     runs-on: ubuntu-latest
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
+    #permissions:
+     # actions: read
+     # contents: read
+      # security-events: write
 
     strategy:
-      fail-fast: false
+      #fail-fast: false
       matrix:
         language: [ 'csharp', 'java', 'javascript', 'python' ]
         # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby' ]
@@ -38,13 +39,21 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      id: checkout repository
+      uses: actions/checkout@v2
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
+      uses: github/codeql-action/init@v1
       with:
         languages: ${{ matrix.language }}
+        queries: security-and-quality
+        
+        -if: matrix.language == 'csharp'
+       name: Build C# code
+       id: build_csharp_code
+       uses: github/codeql-action/autobuild@v1
+        
         
         -if: matrix.language == 'java'
        name: Build Java code
