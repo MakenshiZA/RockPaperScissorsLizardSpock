@@ -4,7 +4,7 @@ services:
   dotnet.player:
     image: ${REGISTRY:-msftrpsls}/dotnet.player:${TAG:-latest}
     build:
-      context: ./Services/RPSLS.DotNetPlayer.Api/
+      context: ./Services/RPSLS.DotNetPlayer,Api/
       dockerfile: Dockerfile
   node.player:
     image: ${REGISTRY:-msftrpsls}/node.player:${TAG:-latest}
