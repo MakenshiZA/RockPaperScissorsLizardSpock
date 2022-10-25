@@ -13,12 +13,15 @@ name: "CodeQL Analysis"
 
 on:
   push:
-    branches: [ "main" ]
+    paths:
+    - 'Source/**'
+    
   pull_request:
-    # The branches below must be a subset of the branches above
-    branches: [ "main" ]
+   paths:
+    - 'Source/**'
+    
   schedule:
-    - cron: 'o 8 * * *'
+    - cron: '0 8 * * *'
     workflow_dispatch:
     
 jobs:
